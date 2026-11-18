@@ -1,0 +1,57 @@
+PRIMARY WORKSPACE - CyberArkEPMRemovalTool and Setup
+
+Primary computer: 192.168.1.101
+Primary folders on that computer:
+  C:\Users\Keith\source\repos\CyberArkEPMRemovalTool
+  C:\Users\Keith\source\repos\CyberArkEPMRemovalTool.Setup
+
+From the iy52648 workstation, these are available as:
+  Y:\CyberArkEPMRemovalTool
+  Y:\CyberArkEPMRemovalTool.Setup
+Y: maps to \\192.168.1.101\Users\Keith\source\repos
+
+Local secondary copies:
+  C:\Users\iy52648\source\repos\CyberArkEPMRemovalTool
+  C:\Users\iy52648\source\repos\CyberArkEPMRemovalTool.Setup
+
+DEVELOP AND BUILD
+Open CyberArkEPMRemovalTool.slnx in the primary folder on 192.168.1.101.
+Install Visual Studio 2026, the .NET desktop development workload,
+a stable .NET 10 SDK >= 10.0.403, and Microsoft Visual Studio Installer
+Projects if building Setup. The existing global.json selects stable .NET 10.
+
+Run in PowerShell from the primary application folder:
+  .\Build-Portable.ps1
+  .\Build-Setup.ps1
+
+The portable app includes its runtime and is written to:
+  publish\CyberArkEPMRemovalTool.exe
+The optional MSI is written to:
+  ..\CyberArkEPMRemovalTool.Setup\Release\CyberArkEPMRemovalTool.Setup.msi
+Build-Setup publishes the app before rebuilding Setup. Both publish profiles
+use the publish folder. Setup uses Publish Items and the self-contained
+profile, without separately installing older .NET runtimes.
+
+UPDATE THE SECONDARY COPY
+On the iy52648 workstation after saving changes in the primary workspace:
+  & 'Y:\CyberArkEPMRemovalTool\Sync-LocalCopy.ps1'
+
+Synchronization runs only when invoked. It copies both projects and portable publish
+outputs from the primary location, verifies copied files with SHA-256, and
+backs up replaced local files in artifacts\sync-backups. It preserves
+local-only files and does not copy bin, obj, .vs, .git, Debug output,
+artifacts, Setup Release output, .user, or .suo files. Do not edit both copies concurrently.
+
+The scripts use their own folder, not an absolute developer path, so builds
+work from the server's local folder or the client's Y: mapping. Running them
+from this workstation executes the build on this workstation; it does not
+remotely invoke Visual Studio on 192.168.1.101.
+
+
+VERIFIED BUILD LOCATIONS
+Portable publishing and Debug compilation passed from the Y: source.
+The MSI built successfully using the synchronized local secondary source.
+Visual Studio command-line Setup building against Y: exited early on this
+workstation. Run Build-Setup.ps1 from the primary computer's native folder.
+The tools and a build on 192.168.1.101 itself have not been verified remotely.
+

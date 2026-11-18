@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="../CyberArkEPMRemovalTool.Setup/CyberArkEPMRemovalTool.Setup.vdproj" Type="Installer">
+    <Build Project="true" />
+    <BuildDependency Project="CyberArkEPMRemovalTool.csproj" />
+  </Project>
+  <Project Path="CyberArkEPMRemovalTool.csproj" />
+</Solution>
+

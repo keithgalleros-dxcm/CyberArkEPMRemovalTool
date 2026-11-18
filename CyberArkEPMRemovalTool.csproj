@@ -1,0 +1,125 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+
+		<!-- ========================================================= -->
+		<!-- APPLICATION -->
+		<!-- ========================================================= -->
+
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net10.0-windows</TargetFramework>
+
+		<Nullable>enable</Nullable>
+		<UseWindowsForms>true</UseWindowsForms>
+		<ImplicitUsings>enable</ImplicitUsings>
+
+		<!-- Require Administrator privileges -->
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+
+
+		<!-- ========================================================= -->
+		<!-- DEPLOYMENT -->
+		<!-- ========================================================= -->
+
+		<!-- Target 64-bit Windows -->
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<PlatformTarget>x64</PlatformTarget>
+
+		<!-- Portable deployment includes the .NET Desktop Runtime. -->
+		<SelfContained>true</SelfContained>
+
+		<!-- Bundle managed and native runtime files into one portable EXE. -->
+		<PublishSingleFile>true</PublishSingleFile>
+        <PublishDir>$(MSBuildProjectDirectory)\publish\</PublishDir>
+		<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+		<DebugType Condition="'$(Configuration)' == 'Release'">embedded</DebugType>
+
+		<!-- Avoid trimming compatibility issues with WinForms -->
+		<PublishTrimmed>false</PublishTrimmed>
+
+		<!-- Release optimization -->
+		<Optimize Condition="'$(Configuration)' == 'Release'">true</Optimize>
+
+
+		<!-- ========================================================= -->
+		<!-- APPLICATION IDENTITY -->
+		<!-- ========================================================= -->
+
+		<AssemblyName>CyberArkEPMRemovalTool</AssemblyName>
+		<RootNamespace>CyberArkEPMRemovalTool</RootNamespace>
+
+		<Product>CyberArk EPM Agent Removal Utility</Product>
+
+		<Title>CyberArk EPM Agent Removal Utility</Title>
+		<AssemblyTitle>CyberArk EPM Agent Removal Utility</AssemblyTitle>
+
+		<Description>Administrative utility that detects registered CyberArk EPM agents, requests full removal through Windows Installer, and checks whether the selected product registration remains.</Description>
+
+
+		<!-- ========================================================= -->
+		<!-- ORGANIZATION / DEVELOPMENT INFORMATION -->
+		<!-- ========================================================= -->
+
+		<Company>DexCom Philippines Inc</Company>
+
+		<Authors>Keith Galleros</Authors>
+
+		<Copyright>Copyright © DexCom Philippines Inc</Copyright>
+
+		<PackageTags>Dexcom;InfoSec Engineering;CyberArk;EPM;Security Engineering</PackageTags>
+
+
+		<!-- ========================================================= -->
+		<!-- VERSION INFORMATION -->
+		<!-- ========================================================= -->
+
+		<Version>1.1.0</Version>
+
+		<AssemblyVersion>1.1.0.0</AssemblyVersion>
+
+		<FileVersion>1.1.0.0</FileVersion>
+
+		<InformationalVersion>1.1.0</InformationalVersion>
+
+	</PropertyGroup>
+
+	<ItemGroup>
+		<AssemblyMetadata Include="Developer" Value="Keith Galleros" />
+		<AssemblyMetadata Include="DeveloperTitle" Value="Staff Cybersecurity Engineer" />
+		<AssemblyMetadata Include="Department" Value="IT-Infosec-Manila" />
+	</ItemGroup>
+
+
+	<!-- =========================================================== -->
+	<!-- RESOURCE DESIGNER -->
+	<!-- =========================================================== -->
+
+	<ItemGroup>
+
+		<Compile Update="Form1.cs"><SubType>Form</SubType></Compile>
+        <Compile Update="AboutForm.cs"><SubType>Form</SubType></Compile>
+
+<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+
+	</ItemGroup>
+
+
+	<!-- =========================================================== -->
+	<!-- EMBEDDED RESOURCES -->
+	<!-- =========================================================== -->
+
+	<ItemGroup>
+
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+
+	</ItemGroup>
+
+</Project>
+
